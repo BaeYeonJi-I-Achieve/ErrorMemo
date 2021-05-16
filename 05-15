@@ -1,0 +1,53 @@
+2021-05-15
+
+-> 프로젝트 중
+  
+  ERROR
+  df = pd.read_excel('C:\Users\sec\Desktop\FADO\visualization\20210514finance')
+  
+  CONSOL
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape
+
+  SOLUTION
+  \ -> / 로 변경
+  \ -> //
+  \ -> \\
+      ERROR
+      ImportError: Missing optional dependency 'fsspec'.  Use pip or conda to install fsspec.
+        SOlUTION
+        pip install fsspec
+        
+      ERROR
+      FileNotFoundError: [Errno 2] No such file or directory: 'C:/Users/sec/Desktop/FADO/visualization/20210514finance'
+        SOLUTION
+        // -> \\
+        \\ -> \
+          ERROR
+          SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape
+            SOLUTION
+              r'~~~~' 이 형식
+              
+              
+              
+              
+              
+              
+PYTHON에서 MYSQL 연결하기
+
+
+# https://d33p.tistory.com/73
+
+import pymysql
+conn = pymysql.connect(host="fadodb.cdhgfueefwts.ap-northeast-2.rds.amazonaws.com"
+                       , user="test", password="1234", db="INVESTAR", charset="utf8")
+cur = conn.cursor()
+sql = "SELECT * FROM move"
+cur.execute(sql)
+
+#-------------------
+
+# 연결 해제
+# cur.close()
+# conn.commit
+# conn.close()
+
