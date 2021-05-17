@@ -1,0 +1,36 @@
+# https://d33p.tistory.com/73
+from datetime import datetime
+import pandas
+import pymysql
+from sqlalchemy import create_engine
+from sqlalchemy.engine import create_engine
+from sqlalchemy.pool import NullPool
+
+
+'''
+conn = pymysql.connect(host="fadodb.cdhgfueefwts.ap-northeast-2.rds.amazonaws.com"
+                       ,port=3306, user="test", password="1234", db="INVESTAR", charset="utf8")
+
+cur = conn.cursor() #-> C
+sql = "SELECT * FROM move"
+cur.execute(sql)
+
+
+# 연결 해제
+# cur.close()
+# conn.commit
+# conn.close()
+'''
+
+# pandas 사용해서 DB연결해보자
+
+conn = pymysql.connect(host="fadodb.cdhgfueefwts.ap-northeast-2.rds.amazonaws.com"
+                       ,port=3306, user="test",password="1234"
+                       ,db="INVESTAR")
+
+sql = "SELECT * FROM move"
+
+result = pandas.read_sql_query(sql,conn)
+print(result)
+
+# db에서 불러오기 성공~ 극뽀옥~
