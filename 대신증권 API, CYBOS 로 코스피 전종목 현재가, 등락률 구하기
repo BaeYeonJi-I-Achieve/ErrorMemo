@@ -1,0 +1,28 @@
+import win32com.client
+
+objStockChart = win32com.client.Dispatch("CpSysDib.StockChart")
+objCpCodeMgr = win32com.client.Dispatch("CpUtil.CpCodeMgr")
+codeList = objCpCodeMgr.GetStockListByMarket(1)  # 거래소  $$$$
+codeList2 = objCpCodeMgr.GetStockListByMarket(2)  # 코스닥 $$$$$
+
+# 코스피 종목코드 리스트 구해서 종목코드&종목코드리스트 삽입칸에 넣을것이야
+for i, code_item in enumerate(codeList):
+    secondCode = objCpCodeMgr.GetStockSectionKind(code_item)
+    name = objCpCodeMgr.CodeToName(code_item)
+
+    # rise_fall request
+    codes = objStockChart.SetInputValue(0, code_item)
+    field = [0, 5, 23, 6]
+    value = objStockChart.SetInputValue(5, field)
+    objStockChart.BlockRequest()
+
+
+    lenn = objStockChart.GetHeaderValue(3)
+    code = objStockChart.GetHeaderValue(0)
+    cur = objStockChart.GetHeaderValue(7)
+    end_price = objStockChart.GetHeaderValue(6)
+
+    for i in range(lenn):
+        day = objStockChart.GetDataValue(0, i)
+        updown = (cur - end_price) / end_price * 100
+        print(code, day, cur, end_price, updown)
