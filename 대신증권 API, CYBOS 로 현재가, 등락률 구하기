@@ -1,0 +1,24 @@
+import win32com.client
+
+objStockChart = win32com.client.Dispatch("CpSysDib.StockChart")
+
+codes = objStockChart.SetInputValue(0, 'A005930')
+field = [0,5,23,6]
+value = objStockChart.SetInputValue(5, field)
+objStockChart.BlockRequest()
+# -------------- 여기까지 데이터 요청완료 ---------------------
+
+lenn = objStockChart.GetHeaderValue(3)
+code = objStockChart.GetHeaderValue(0)
+cur = objStockChart.GetHeaderValue(7)
+end_price = objStockChart.GetHeaderValue(6)
+
+for i in range(lenn):
+    day = objStockChart.GetDataValue(0, i)
+    updown = (cur - end_price) / end_price * 100
+    print(code,day,cur,end_price,updown)
+
+    # end_price = 전날 종가 / cur = 현재가
+    # 등락률 계산공식 = 오늘 현재주가 - 전일 종가 / 전일 종가 X 100
+
+
